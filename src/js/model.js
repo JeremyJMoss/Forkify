@@ -9,7 +9,7 @@ export const state = {
   search: {
     query: '',
     results: [],
-    page: ''
+    page: 1
   }
 };
 
@@ -53,10 +53,18 @@ export const loadSearchResults = async function(query){
   }
 }
 
-export const getSearchResultsPage = function(){
-  const page = state.search.page;
-  
+export const getSearchResultsPage = function(page = 1){
+  state.search.page = page;
   const start = (page - 1) * RES_PER_PAGE;
   const end = page * RES_PER_PAGE;
   return state.search.results.slice(start, end);
+}
+
+export const updateServings = function(newServings){
+  state.recipe.ingredients.forEach(ingredient => {
+    if(!ingredient.quantity) return;
+    const singleServing = ingredient.quantity / state.recipe.servings;
+    ingredient.quantity = singleServing * newServings;
+  });
+  state.recipe.servings = newServings;
 }

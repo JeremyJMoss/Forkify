@@ -15,6 +15,10 @@ class RecipeView extends View{
     );
   }
 
+  addHandlerServings(handler){
+    this._parentEl.addEventListener("click", handler);
+  }
+
   _generateMarkup() {
     return `<figure class="recipe__fig">
           <img src=${this._data.image} alt="Food" class="recipe__img" />
@@ -43,12 +47,12 @@ class RecipeView extends View{
             <span class="recipe__info-text">servings</span>
 
             <div class="recipe__info-buttons">
-              <button class="btn--tiny btn--increase-servings">
+              <button class="btn--tiny btn--update-servings" data-serving="-1">
                 <svg>
                   <use href="${icons}#icon-minus-circle"></use>
                 </svg>
               </button>
-              <button class="btn--tiny btn--increase-servings">
+              <button class="btn--tiny btn--update-servings" data-serving="1">
                 <svg>
                   <use href="${icons}#icon-plus-circle"></use>
                 </svg>
