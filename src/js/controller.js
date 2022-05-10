@@ -25,7 +25,7 @@ const controlRecipes = async function () {
   // Rendering recipe
   recipeView.render(model.state.recipe);
   }catch(err){
-    recipeView.renderError(err);
+    recipeView.renderError();
   }
 };
 
@@ -76,16 +76,14 @@ const controlAddBookmark = function(){
 }
 
 const init = function(){
-
+  model.getBookmarks();
+  bookmarksView.render(model.state.bookmarks);
   recipeView.addHandlerRender(controlRecipes);
   recipeView.addHandlerServings(controlServings);
   recipeView.addHandlerBookmark(controlAddBookmark);
   searchView.addHandlerSearch(controlSearchResults);
   paginationView.addHandlerPagination(controlPageResults);
-  model.getBookmarks();
-  bookmarksView.render(model.state.bookmarks);
 }
 
 init();
-
 

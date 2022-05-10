@@ -554,7 +554,7 @@ const controlRecipes = async function() {
         // Rendering recipe
         _recipeViewJsDefault.default.render(_modelJs.state.recipe);
     } catch (err) {
-        _recipeViewJsDefault.default.renderError(err);
+        _recipeViewJsDefault.default.renderError();
     }
 };
 const controlSearchResults = async function() {
@@ -592,13 +592,13 @@ const controlAddBookmark = function() {
     else _bookmarksViewJsDefault.default.update(_modelJs.state.bookmarks);
 };
 const init = function() {
+    _modelJs.getBookmarks();
+    _bookmarksViewJsDefault.default.render(_modelJs.state.bookmarks);
     _recipeViewJsDefault.default.addHandlerRender(controlRecipes);
     _recipeViewJsDefault.default.addHandlerServings(controlServings);
     _recipeViewJsDefault.default.addHandlerBookmark(controlAddBookmark);
     _searchViewJsDefault.default.addHandlerSearch(controlSearchResults);
     _paginationViewJsDefault.default.addHandlerPagination(controlPageResults);
-    _modelJs.getBookmarks();
-    _bookmarksViewJsDefault.default.render(_modelJs.state.bookmarks);
 };
 init();
 
@@ -1677,6 +1677,8 @@ parcelHelpers.export(exports, "deleteBookmark", ()=>deleteBookmark
 );
 parcelHelpers.export(exports, "getBookmarks", ()=>getBookmarks
 );
+parcelHelpers.export(exports, "clearBookmarks", ()=>clearBookmarks
+);
 var _regeneratorRuntime = require("regenerator-runtime");
 var _helpers = require("./helpers");
 var _config = require("./config");
@@ -1742,6 +1744,7 @@ const updateServings = function(newServings) {
     });
     state.recipe.servings = newServings;
 };
+// Adding bookmarks to local storage
 const persistBookmarks = function() {
     localStorage.setItem('bookmarks', JSON.stringify(state.bookmarks));
 };
@@ -1760,6 +1763,9 @@ const deleteBookmark = function(id) {
 const getBookmarks = function() {
     const storage = localStorage.getItem("bookmarks");
     if (storage) state.bookmarks = JSON.parse(storage);
+};
+const clearBookmarks = function() {
+    localStorage.clear("bookmarks");
 };
 
 },{"regenerator-runtime":"dXNgZ","./helpers":"hGI1E","./config":"k5Hzs","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"dXNgZ":[function(require,module,exports) {
