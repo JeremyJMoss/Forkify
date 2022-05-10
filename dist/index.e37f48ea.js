@@ -602,7 +602,7 @@ const init = function() {
 };
 init();
 
-},{"core-js/modules/web.immediate.js":"49tUX","./model.js":"Y4A21","./views/recipeView.js":"l60JC","regenerator-runtime/runtime":"dXNgZ","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./views/searchView.js":"9OQAM","./views/resultsView.js":"cSbZE","./views/paginationView.js":"6z7bi","./views/bookmarksView.js":"4Lqzq"}],"49tUX":[function(require,module,exports) {
+},{"core-js/modules/web.immediate.js":"49tUX","./model.js":"Y4A21","./views/recipeView.js":"l60JC","./views/searchView.js":"9OQAM","./views/resultsView.js":"cSbZE","./views/paginationView.js":"6z7bi","./views/bookmarksView.js":"4Lqzq","regenerator-runtime/runtime":"dXNgZ","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"49tUX":[function(require,module,exports) {
 // TODO: Remove this module from `core-js@4` since it's split to modules listed below
 require('../modules/web.clear-immediate');
 require('../modules/web.set-immediate');
@@ -2523,7 +2523,76 @@ class RecipeView extends _viewDefault.default {
 }
 exports.default = new RecipeView();
 
-},{"url:../../img/icons.svg":"loVOp","fractional":"3SU56","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","./view":"bWlJ9"}],"loVOp":[function(require,module,exports) {
+},{"./view":"bWlJ9","url:../../img/icons.svg":"loVOp","fractional":"3SU56","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"bWlJ9":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _iconsSvg = require("url:../../img/icons.svg");
+var _iconsSvgDefault = parcelHelpers.interopDefault(_iconsSvg);
+class View {
+    _data;
+    render(data) {
+        if (!data || Array.isArray(data) && data.length == 0) return this.renderError();
+        this._data = data;
+        const markup = this._generateMarkup();
+        this._clear();
+        this._parentEl.insertAdjacentHTML('afterbegin', markup);
+    }
+    renderSpinner() {
+        const markup = `<div class="spinner">
+            <svg>
+                <use href="${_iconsSvgDefault.default}#icon-loader"></use>
+            </svg>
+        </div>`;
+        this._clear();
+        this._parentEl.insertAdjacentHTML('afterbegin', markup);
+    }
+    _clear() {
+        this._parentEl.innerHTML = '';
+    }
+    update(data) {
+        this._data = data;
+        const newMarkup = this._generateMarkup();
+        const newDom = document.createRange().createContextualFragment(newMarkup);
+        const newElements = Array.from(newDom.querySelectorAll("*"));
+        const curElements = Array.from(this._parentEl.querySelectorAll("*"));
+        // updating changed text
+        newElements.forEach((newEl, i)=>{
+            const curEl = curElements[i];
+            if (!newEl.isEqualNode(curEl) && newEl.firstChild?.nodeValue.trim() !== "") curEl.textContent = newEl.textContent;
+            // update changed attributes
+            if (!newEl.isEqualNode(curEl)) Array.from(newEl.attributes).forEach((attr)=>curEl.setAttribute(attr.name, attr.value)
+            );
+        });
+    }
+    renderError(msg = this._errMessage) {
+        const markup = `<div class="error">
+        <div>
+          <svg>
+            <use href="${_iconsSvgDefault.default}#icon-alert-triangle"></use>
+          </svg>
+        </div>
+        <p>${msg}</p>
+      </div>`;
+        this._clear();
+        this._parentEl.insertAdjacentHTML("afterbegin", markup);
+    }
+    renderMessage(msg = this._message) {
+        const markup = `  <div class="recipe">
+        <div class="message">
+          <div>
+            <svg>
+              <use href="${_iconsSvgDefault.default}#icon-smile"></use>
+            </svg>
+          </div>
+          <p>${msg}</p>
+        </div>`;
+        this._clear();
+        this._parentEl.insertAdjacentHTML("afterbegin", markup);
+    }
+}
+exports.default = View;
+
+},{"url:../../img/icons.svg":"loVOp","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"loVOp":[function(require,module,exports) {
 module.exports = require('./helpers/bundle-url').getBundleURL('hWUTQ') + "icons.dfd7a6db.svg" + "?" + Date.now();
 
 },{"./helpers/bundle-url":"lgJ39"}],"lgJ39":[function(require,module,exports) {
@@ -2813,76 +2882,7 @@ Fraction.primeFactors = function(n) {
 };
 module.exports.Fraction = Fraction;
 
-},{}],"bWlJ9":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-var _iconsSvg = require("url:../../img/icons.svg");
-var _iconsSvgDefault = parcelHelpers.interopDefault(_iconsSvg);
-class View {
-    _data;
-    render(data) {
-        if (!data || Array.isArray(data) && data.length == 0) return this.renderError();
-        this._data = data;
-        const markup = this._generateMarkup();
-        this._clear();
-        this._parentEl.insertAdjacentHTML('afterbegin', markup);
-    }
-    renderSpinner() {
-        const markup = `<div class="spinner">
-            <svg>
-                <use href="${_iconsSvgDefault.default}#icon-loader"></use>
-            </svg>
-        </div>`;
-        this._clear();
-        this._parentEl.insertAdjacentHTML('afterbegin', markup);
-    }
-    _clear() {
-        this._parentEl.innerHTML = '';
-    }
-    update(data) {
-        this._data = data;
-        const newMarkup = this._generateMarkup();
-        const newDom = document.createRange().createContextualFragment(newMarkup);
-        const newElements = Array.from(newDom.querySelectorAll("*"));
-        const curElements = Array.from(this._parentEl.querySelectorAll("*"));
-        // updating changed text
-        newElements.forEach((newEl, i)=>{
-            const curEl = curElements[i];
-            if (!newEl.isEqualNode(curEl) && newEl.firstChild?.nodeValue.trim() !== "") curEl.textContent = newEl.textContent;
-            // update changed attributes
-            if (!newEl.isEqualNode(curEl)) Array.from(newEl.attributes).forEach((attr)=>curEl.setAttribute(attr.name, attr.value)
-            );
-        });
-    }
-    renderError(msg = this._errMessage) {
-        const markup = `<div class="error">
-        <div>
-          <svg>
-            <use href="${_iconsSvgDefault.default}#icon-alert-triangle"></use>
-          </svg>
-        </div>
-        <p>${msg}</p>
-      </div>`;
-        this._clear();
-        this._parentEl.insertAdjacentHTML("afterbegin", markup);
-    }
-    renderMessage(msg = this._message) {
-        const markup = `  <div class="recipe">
-        <div class="message">
-          <div>
-            <svg>
-              <use href="${_iconsSvgDefault.default}#icon-smile"></use>
-            </svg>
-          </div>
-          <p>${msg}</p>
-        </div>`;
-        this._clear();
-        this._parentEl.insertAdjacentHTML("afterbegin", markup);
-    }
-}
-exports.default = View;
-
-},{"url:../../img/icons.svg":"loVOp","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"9OQAM":[function(require,module,exports) {
+},{}],"9OQAM":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 var _iconsSvg = require("url:../../img/icons.svg");
