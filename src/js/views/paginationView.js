@@ -50,7 +50,12 @@ class PaginationView extends View {
     }
 
     addHandlerPagination(handler){
-      this._parentEl.addEventListener("click", handler);
+      this._parentEl.addEventListener("click", function(e){
+        const btn = e.target.closest("button");
+        if(!btn) return;
+        const goToPage = +btn.querySelector("span").innerHTML.at(-1);
+        handler(goToPage);
+      });
     }
 }
 

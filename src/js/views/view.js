@@ -37,7 +37,7 @@ export default class View{
         // updating changed text
         newElements.forEach((newEl, i) => {
           const curEl = curElements[i];
-          if (!newEl.isEqualNode(curEl) && newEl.firstChild.nodeValue.trim() !== ""){
+          if (!newEl.isEqualNode(curEl) && newEl.firstChild?.nodeValue.trim() !== ""){
             curEl.textContent = newEl.textContent;
           }
 
