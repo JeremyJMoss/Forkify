@@ -22,6 +22,11 @@ export class ResultsView extends View{
             <h4 class="preview__title">${entry.title}</h4>
             <p class="preview__publisher">${entry.publisher}</p>
         </div>
+        <div class="preview__user-generated${entry.key ? "" : " hidden"}">
+            <svg>
+              <use href="${icons}#icon-user"></use>
+            </svg>
+          </div>
         </a>
     </li>`
     }

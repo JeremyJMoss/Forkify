@@ -7,6 +7,7 @@ class RecipeView extends View{
   _parentEl = document.querySelector('.recipe');
   _errMessage = "We could not find that recipe. Please try another one!"
   _message = "";
+  _allowableFractions = ["1/2", "1/4", "1/3", "3/4", "2/3"];
 
   addHandlerRender(handler){
     // creating event listeners for page loads and url bar changes
@@ -70,7 +71,10 @@ class RecipeView extends View{
               </button>
             </div>
           </div>
-          <div class="recipe__user-generated">
+          <div class="recipe__user-generated${this._data.key ? "" : " hidden"}">
+            <svg>
+              <use href="${icons}#icon-user"></use>
+            </svg>
           </div>
           <button class="btn--round btn--bookmark">
             <svg class="">
@@ -127,7 +131,11 @@ class RecipeView extends View{
     }
 
   _createFraction(num) {
-    return new Fraction(num).toString();
+    const fraction = new Fraction(num).toString();
+    if (this._allowableFractions.includes(fraction)){
+      return fraction;
+    }
+    return num;
   }
 }
 
