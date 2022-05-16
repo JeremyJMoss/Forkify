@@ -1,13 +1,12 @@
 import View from "./view";
 
 import icons from 'url:../../img/icons.svg';
-import { Fraction } from 'fractional';
 
 class RecipeView extends View{
   _parentEl = document.querySelector('.recipe');
   _errMessage = "We could not find that recipe. Please try another one!"
   _message = "";
-  _allowableFractions = ["1/2", "1/4", "1/3", "3/4", "2/3"];
+  _allowableFractions = {50: "1/2", 25: "1/4", 33: "1/3", 75: "3/4", 66: "2/3"};
 
   addHandlerRender(handler){
     // creating event listeners for page loads and url bar changes
@@ -131,9 +130,10 @@ class RecipeView extends View{
     }
 
   _createFraction(num) {
-    const fraction = new Fraction(num).toString();
-    if (this._allowableFractions.includes(fraction)){
-      return fraction;
+    const fractionAmount = Math.floor((num - Math.floor(num))* 100)
+    const fractions = Object.keys(this._allowableFractions).map(fraction => Number(fraction));
+    if (fractions.includes(fractionAmount)){
+      return this._allowableFractions[fractionAmount];
     }
     return num;
   }
