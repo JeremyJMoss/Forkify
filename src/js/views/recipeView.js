@@ -1,5 +1,4 @@
 import View from "./view";
-
 import icons from 'url:../../img/icons.svg';
 
 class RecipeView extends View{
@@ -133,7 +132,7 @@ class RecipeView extends View{
     const fractionAmount = Math.floor((num - Math.floor(num))* 100)
     const fractions = Object.keys(this._allowableFractions).map(fraction => Number(fraction));
     if (fractions.includes(fractionAmount)){
-      return this._allowableFractions[fractionAmount];
+      return `${Math.floor(num) ? Math.floor(num) + " " : ""}${this._allowableFractions[fractionAmount]}`;
     }
     return num;
   }
